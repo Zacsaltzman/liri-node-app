@@ -118,11 +118,14 @@ function movieWrite () {
 	var queryURL = "http://www.omdbapi.com/?t=" + queryTerm + "&apikey=40e9cece"
 
 	request(queryURL, function (error, response, body) {
-		if (error) {
-			console.log(error);
-		}
-
 		var obj = JSON.parse(body);
+
+		if (error) {
+			return console.log(error);
+		}
+		else if (obj.Response == "False") {
+			return console.log("No Movie Found");
+		}
 
 		var movieMessage = "Title: " + obj.Title + "\nYear: " + obj.Year + "\nIMDB Rating: " + obj.Ratings[0].Value + "\nRotten Tomatoes Rating: " + obj.Ratings[1].Value + "\nCountry: " + obj.Country + "\nLanguage: " + obj.Language + "\nPlot: " + obj.Plot + "\nActors: " + obj.Actors;
 
